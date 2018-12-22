@@ -5,8 +5,6 @@ import {
   RouteComponentProps,
   RouteProps,
 } from "react-router-dom"
-import { connect } from "react-redux"
-import { rootState } from "../reducers"
 
 interface PrivateRouteProps extends RouteProps {
   component: any;
@@ -34,10 +32,4 @@ const PrivateRoute = (props: PrivateRouteProps) => {
   )
 }
 
-const mapStateToProps = (store: rootState) => {
-  return {
-    isAuth: store.login.isLogin,
-  }
-}
-
-export default connect(mapStateToProps)(PrivateRoute)
+export default PrivateRoute

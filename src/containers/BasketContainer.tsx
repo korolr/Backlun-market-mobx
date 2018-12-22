@@ -1,11 +1,12 @@
 import React, { Component } from "react"
 import { Basket } from "../components/Basket"
-import { observer, inject } from "mobx-react"
+import { observer, inject} from "mobx-react"
 import { IBasketStore } from "../stores/basketStore"
 
 interface Props {
   basStore?: IBasketStore;
 }
+
 
 @inject("basStore")
 @observer
@@ -24,6 +25,5 @@ class BasketContainer extends Component<Props> {
     )
   }
 }
-
 
 export default BasketContainer

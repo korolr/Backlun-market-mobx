@@ -20,6 +20,7 @@ interface Props {
   isLogin: boolean;
   error: string;
   loginReq: () => void;
+  push: () => void;
 }
 
 export class Login extends React.Component<Props, State> {
@@ -44,13 +45,13 @@ export class Login extends React.Component<Props, State> {
 
   componentDidUpdate() {
     if (this.props.isLogin) {
-      history.push(`/`)
+      this.props.push()
     }
   }
 
   componentDidMount() {
     if (this.props.isLogin) {
-      history.push(`/`)
+      this.props.push()
     }
     this.props.loginReq()
   }

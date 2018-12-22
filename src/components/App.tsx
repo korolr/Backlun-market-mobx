@@ -9,7 +9,7 @@ import HomeContainer from "../containers/HomeContainer"
 import ProductContainer from "../containers/ProductContainer"
 import CategoryContainer from "../containers/CategoryContainer"
 
-class App extends React.Component {
+class App extends React.PureComponent {
   render() {
     return (
       <React.Fragment>

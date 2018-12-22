@@ -18,9 +18,9 @@ interface Props {
 @observer
 class HeadContainer extends Component<Props> {
   render() {
-    const {  logOut, isLogin, token } = this.props.logStore!;
+    const { logOut, isLogin, token } = this.props.logStore!;
     const { data } = this.props.basStore!;
-    return <Header loginOut={logOut} isLogin={isLogin} basket={data} token={token} />
+    return <Header loginOut={logOut} isLogin={isLogin} basket={data} token={token}/>
   }
 }
 
