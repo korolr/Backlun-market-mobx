@@ -20,7 +20,7 @@ const PrivateRoute = (props: PrivateRouteProps) => {
     <Route
       {...rest}
       render={(routeProps: RouteComponentProps<any>): React.ReactNode =>
-        isAuth ? (
+        true ? (
           <Component {...routeProps} />
         ) : (
           <Redirect

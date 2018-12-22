@@ -21,6 +21,7 @@ interface Props {
   }>;
   loginOut: () => void;
   isLogin: boolean;
+  token: string | null;
 }
 
 export class Header extends React.Component<Props, State> {
@@ -36,13 +37,13 @@ export class Header extends React.Component<Props, State> {
     )
   }
   render() {
-    const { loginOut, isLogin, basket } = this.props
+    const { loginOut, isLogin, basket, token } = this.props
     return (
       <div>
         <Navbar>
           <Navbar.Header>
             <Navbar.Brand>
-              <Link to="/">Магазин</Link>
+              <Link to="/">Магазин {token}</Link>
             </Navbar.Brand>
             <Navbar.Toggle />
           </Navbar.Header>

@@ -1,44 +1,27 @@
 import React, { Component } from "react"
-import { connect } from "react-redux"
 import { Header } from "../components/Header"
-import { logOut } from "../actions/loginActions"
-import { fetchBasket, basketAction } from "../actions/basketActions"
-import { loginAction } from "../actions/loginActions"
-import { ThunkDispatch } from "redux-thunk"
-
-import { rootState } from "../reducers"
+import { observer, inject } from "mobx-react"
+import { IBasketStore } from "../stores/basketStore"
+import { ILoginStore } from "../stores/loginStore"
 
 interface Props {
-  toLoginOut: () => void;
-  login: boolean;
-  basket: any[];
+  basStore?: IBasketStore;
+  logStore?: ILoginStore;
+  match?: {
+    params: {
+      number: number,
+    },
+  };
 }
 
+@inject("basStore", "logStore")
+@observer
 class HeadContainer extends Component<Props> {
-  componentWillReceiveProps() {}
   render() {
-    const { toLoginOut, login, basket } = this.props
-    return <Header loginOut={toLoginOut} isLogin={login} basket={basket} />
+    const {  logOut, isLogin, token } = this.props.logStore!;
+    const { data } = this.props.basStore!;
+    return <Header loginOut={logOut} isLogin={isLogin} basket={data} token={token} />
   }
 }
 
-const mapStateToProps = (store: rootState) => {
-  return {
-    login: store.login.isLogin,
-    basket: store.basket.data,
-  }
-}
-
-const mapDispatchToProps = (
-  dispatch: ThunkDispatch<rootState, void, basketAction | loginAction>
-) => {
-  return {
-    toLoginOut: () => dispatch(logOut()),
-    toGetBasket: () => dispatch(fetchBasket()),
-  }
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(HeadContainer)
+export default HeadContainer

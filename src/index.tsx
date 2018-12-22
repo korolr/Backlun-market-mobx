@@ -8,11 +8,11 @@ import { PersistGate } from "redux-persist/integration/react"
 import { Router } from "react-router-dom"
 import history from "./history"
 import * as t from "mobx-react"
-import { stores } from "./stores"
+import { RootStore } from "./stores"
 
 ReactDOM.render(
   <BrowserRouter>
-    <t.Provider {...stores}>
+    <t.Provider {...new RootStore()}>
       <Provider store={store}>
         <PersistGate persistor={persistor}>
           <Router history={history}>

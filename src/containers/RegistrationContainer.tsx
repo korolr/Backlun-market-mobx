@@ -1,39 +1,18 @@
 import React, { Component } from "react"
-import { connect } from "react-redux"
 import { Registration } from "../components/Registration"
-import {
-  registrationStart,
-  registrationReq,
-  registrationAction,
-} from "../actions/registrationActions"
-
-import { ThunkDispatch } from "redux-thunk"
-
-import { rootState } from "../reducers"
 
 import { observer, inject } from "mobx-react"
 import { IRegistrationStore } from "../stores/registrationStore"
+import { ILoginStore } from "../stores/loginStore"
 
-interface AppProps {
+interface Props {
   regStore?: IRegistrationStore;
+  logStore?: ILoginStore;
 }
 
-// interface Props {
-//   toRegistration: (
-//     login: string,
-//     password: string,
-//     name: string,
-//     address: string
-//   ) => void;
-//   error: string;
-//   success: boolean;
-//   login: boolean;
-//   toRegistrationReq: () => void;
-// }
-
-@inject('regStore')
+@inject("regStore", "logStore")
 @observer
-class RegistrationContainer extends Component<AppProps> {
+class RegistrationContainer extends Component<Props> {
   render() {
     const {
       registrationStart,
@@ -41,12 +20,13 @@ class RegistrationContainer extends Component<AppProps> {
       success,
       registrationReq,
     } = this.props.regStore!
+    const { isLogin } = this.props.logStore!;
     return (
       <div>
         <Registration
           registration={registrationStart}
           error={error}
-          isLogin={false}
+          isLogin={isLogin}
           success={success}
           regReq={registrationReq}
         />
@@ -54,32 +34,5 @@ class RegistrationContainer extends Component<AppProps> {
     )
   }
 }
-
-// const mapStateToProps = (store: rootState) => {
-//   return {
-//     success: store.registration.success,
-//     error: store.registration.error,
-//     login: store.login.isLogin,
-//   }
-// }
-
-// const mapDispatchToProps = (
-//   dispatch: ThunkDispatch<null, void, registrationAction>
-// ) => {
-//   return {
-//     toRegistration: (
-//       login: string,
-//       password: string,
-//       name: string,
-//       address: string
-//     ) => dispatch(registrationStart(login, password, name, address)),
-//     toRegistrationReq: () => dispatch(registrationReq()),
-//   }
-// }
-
-// export default connect(
-//   mapStateToProps,
-//   mapDispatchToProps
-// )(RegistrationContainer)
 
 export default RegistrationContainer

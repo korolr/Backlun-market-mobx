@@ -16,7 +16,7 @@ class App extends React.Component {
         <HeaderContainer />
         <Switch>
           <Route exact path="/" component={HomeContainer} />
-          <PrivateRoute path="/basket" component={BasketContainer} />
+          <Route path="/basket" component={BasketContainer} />
           <Route exact path="/login" component={LoginContainer} />
           <Route path="/product/:number" component={ProductContainer} />
           <Route path="/cat/:number" component={CategoryContainer} />

@@ -1,21 +1,12 @@
 import React, { Component } from "react"
-import { connect } from "react-redux"
 import { Product } from "../components/Product"
-import {
-  fetchBasket,
-  updateBasket,
-  basketAction,
-} from "../actions/basketActions"
-
-import { ThunkDispatch } from "redux-thunk"
-
-import { rootState } from "../reducers"
+import { observer, inject } from "mobx-react"
+import { IBasketStore } from "../stores/basketStore"
+import { ILoginStore } from "../stores/loginStore"
 
 interface Props {
-  toUpdateBasket: (product: number, count: number) => void;
-  toGetBasket: () => void;
-  login: boolean;
-  basket: any[];
+  basStore?: IBasketStore;
+  logStore?: ILoginStore;
   match: {
     params: {
       number: number,
@@ -23,17 +14,20 @@ interface Props {
   };
 }
 
+@inject("regStore", "logStore")
+@observer
 class ProductContainer extends Component<Props> {
   componentDidMount() {}
   render() {
-    const { basket, toGetBasket, login, toUpdateBasket } = this.props
+    const { isLogin } = this.props.logStore!;
+    const { data, getBasket, updateBasket } = this.props.basStore!;
     return (
       <div>
         <Product
-          basket={basket}
-          getBasket={toGetBasket}
-          login={login}
-          updateBasket={toUpdateBasket}
+          basket={data}
+          getBasket={getBasket}
+          login={isLogin}
+          updateBasket={updateBasket}
           id={this.props.match.params.number}
         />
       </div>
@@ -41,24 +35,4 @@ class ProductContainer extends Component<Props> {
   }
 }
 
-const mapStateToProps = (store: rootState) => {
-  return {
-    basket: store.basket.data,
-    login: store.login.isLogin,
-  }
-}
-
-const mapDispatchToProps = (
-  dispatch: ThunkDispatch<rootState, void, basketAction>
-) => {
-  return {
-    toGetBasket: () => dispatch(fetchBasket()),
-    toUpdateBasket: (product: number, count: number) =>
-      dispatch(updateBasket(product, count)),
-  }
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ProductContainer)
+export default ProductContainer
